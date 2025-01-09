@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>The Chop Method</h1>
+      <button id="startApp">Start App</button>
+      <input type="file" id="sample" accept="audio/*" />
+      <div id="controls">
+        <div class="control-group">
+          <label for="BPM">BPM</label>
+          <input id="bpm" type="number" min="1" max="250" value="120" />
+          <!-- <span id="bpmValue" -->
+        </div>
+        <!-- <div class="control-group">
+          <label for="sensitivityKnob">Sensitivity:</label>
+          <input
+            id="sensitivityKnob"
+            type="range"
+            min="0.01"
+            max="0.5"
+            step="0.01"
+            value="0.1"
+          />
+          <span id="sensitivityValue">0.6</span>
+        </div>
+        <div class="control-group">
+          <label for="windowSizeKnob">Window Size:</label>
+          <input
+            id="windowSizeKnob"
+            type="range"
+            min="256"
+            max="8192"
+            step="256"
+            value="2048"
+          />
+          <span id="windowSizeValue">2048</span>
+        </div> -->
+      </div>
+      <div id="zoom">
+        <label for="zoomLevel">Zoom:</label>
+        <input
+          id="zoomLevel"
+          type="range"
+          min="1"
+          max="1000"
+          step="1"
+          value="1"
+        />
+      </div>
+      <div id="waveform"></div>
+      <button id="playPause">Play/Pause</button>
+      <button id="download">Download</button>
+    </div>
+    <script src="./src/app.js" type="module"></script>
+  </body>
+</html>

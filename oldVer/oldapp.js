@@ -1,6 +1,6 @@
 import WaveSurfer from 'wavesurfer.js';
 import RegionsPlugin from 'wavesurfer.js/dist/plugins/regions.esm.js';
-import { bpmDivisions } from '../bpmDivisions.js';
+import { bpmDivisions } from '../src/utils/bpmDivisions.js';
 import * as Tone from 'tone';
 let wavesurfer;
 // let sensitivity = 0.6; // Lower sensitivity for more peaks

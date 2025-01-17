@@ -1,6 +1,8 @@
 // ? This file will serve as the entry point for the React App
 import React from 'react';
-import ReactDom from 'react-dom';
-import App from './App';
+import ReactDom from 'react-dom/client';
+import App from './App.js';
+import './style.css';
 
-ReactDom.render(<App />, document.getElementById('root'));
+const root = ReactDom.createRoot(document.getElementById('root'));
+root.render(<App />);

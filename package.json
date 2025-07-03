@@ -3,17 +3,34 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack",
-    "start": "webpack serve --mode development",
-    "build": "webpack --mode production"
+    "dev": "webpack --mode development --watch",
+    "start": "webpack serve --mode development --open",
+    "build": "webpack --mode production",
+    "analyze": "webpack-bundle-analyzer dist/main.js"
   },
-  "keywords": [],
+  "keywords": [
+    "audio",
+    "music",
+    "chop",
+    "samples",
+    "bpm",
+    "waveform",
+    "react",
+    "tone.js"
+  ],
   "author": "Joshua Hirakawa",
   "license": "ISC",
   "description": "A web app for chopping and processing audio samples.",
+  "homepage": "https://github.com/JoshuaHirakawa/The-Chop-Method#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoshuaHirakawa/The-Chop-Method.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JoshuaHirakawa/The-Chop-Method/issues"
+  },
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.15",
-    "@wavesurfer/react": "^1.0.7",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -28,10 +45,7 @@
     "compression-webpack-plugin": "^11.1.0",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.3",
-    "install": "^0.13.0",
-    "npm": "^11.0.0",
     "patch-package": "^8.0.0",
-    "postinstall-postinstall": "^2.1.0",
     "style-loader": "^4.0.0",
     "webpack": "^5.97.1",
     "webpack-bundle-analyzer": "^4.10.2",

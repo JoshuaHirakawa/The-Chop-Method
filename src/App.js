@@ -56,8 +56,15 @@ const App = () => {
   // ; HANDLER FUNCTION FOR FILE UPLOAD
   const handleFileUpload = async (e) => {
     // console.log('e.target, files: ', e.target.files);
-    // Ensure the file type is supported
+
+    /// extract chosen file from event
     const file = e.target.files[0];
+
+    /// update the file name span element with chosen file
+    const fileNameSpan = document.querySelector('.file-name');
+    fileNameSpan.textContent = file ? file.name : 'No file';
+
+    /// check if file is valid for tone and wavesurfer
     if (!file || !file.type.startsWith('audio/')) {
       console.error('Invalid file type. Please upload an audio file.');
       return;
@@ -222,6 +229,10 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+    handleCreateRegions();
+  }, [bpm, selectedDivision]);
+
   // > HANDLER FUNCTION FOR SHUFFLING AUDIO CHOPS
   // ; BIGGEST FEATURE ********
   const handleShuffle = async () => {
@@ -316,12 +327,19 @@ const App = () => {
 
       let currentTime = 0;
       /// FADE IN AND OUT SLIGHTLY TO AVOID CLICKY CHOPS
-      const fadeDuration = 0.08;
+      // Adaptive fade duration: 5% of chop duration, but max 0.05 seconds, min 0.005 seconds
+      const baseFadeDuration = 0.02; // 20ms base fade
 
       // Process each shuffled region and copy it into the offline context
       shuffledRegions.forEach((region) => {
         const { start, end } = region;
         const regionDuration = end - start;
+
+        // Adaptive fade: 5% of region duration, clamped between 5ms and 50ms
+        const fadeDuration = Math.max(
+          0.005,
+          Math.min(regionDuration * 0.05, 0.05)
+        );
 
         // Create a new buffer source for each region
         const source = offlineContext.createBufferSource();
@@ -336,14 +354,14 @@ const App = () => {
         gainNode.gain.setValueAtTime(
           1,
           currentTime + regionDuration - fadeDuration
-        );
-        // Sustain full gain
+        ); // Sustain full gain
         gainNode.gain.linearRampToValueAtTime(0, currentTime + regionDuration); // Fade-out
 
         source.start(currentTime, start, regionDuration);
 
-        // Connect the source to the offline context destination
-        source.connect(offlineContext.destination);
+        // Connect the source through the gain node to the destination
+        source.connect(gainNode);
+        gainNode.connect(offlineContext.destination);
 
         // Increment the current time for the next region
         currentTime += regionDuration;
@@ -548,13 +566,12 @@ const App = () => {
     //   console.log('Shuffled regions added to the new WaveSurfer instance.');
     // });
   };
-
-  // ; HANDLER FUNCTION FOR SUBMITTING BPM
-  const handleSubmitBPM = (e) => {
-    e.preventDefault();
-    setBPM(bpmInput);
-    console.log(`BPM submitted: ${bpmInput}`);
+  // ; HANDLE BPM CHANGE
+  const handleBPMChange = (value) => {
+    setBpmInput(value); // Update input state
+    setBPM(value); // Update BPM state
   };
+
   // ; HANDLE DIVISION INPUT CHANGE
   const handleDivisionChange = (e) => {
     setSelectedDivision(e.target.value);
@@ -630,47 +647,62 @@ const App = () => {
 
       {/* Row 1: File upload and submit */}
       <div className='row'>
-        <input type='file' accept='audio/*' onChange={handleFileUpload} />
-        <button type='submit' onClick={initializeAudioContext}>
-          Submit
-        </button>
+        <div className='file-upload-container'>
+          <label htmlFor='file-upload' className='custom-file-label'>
+            Choose File
+          </label>
+          <input
+            id='file-upload'
+            type='file'
+            accept='audio/*'
+            onChange={(e) => {
+              handleFileUpload(e); // Handle file upload
+              initializeAudioContext(); // Initialize audio context automatically
+            }}
+            className='file-input'
+          />
+          <span className='file-name'>No file</span>
+        </div>
       </div>
 
       {/* Row 2: BPM */}
       <div className='row'>
-        <form onSubmit={handleSubmitBPM} className='bpm-container'>
-          <label htmlFor='bpm-input'>BPM: </label>
-          <input
-            id='bpm-input'
-            type='number'
-            value={bpmInput}
-            onChange={(e) => setBpmInput(Number(e.target.value))}
-            placeholder='Enter BPM'
-          />
-          <button type='submit'>Submit</button>
-        </form>
-      </div>
-
-      {/* Row 3: beat division */}
-      <div className='row'>
-        <div className='division-container'>
-          <label htmlFor='division-select'>Division: </label>
-          <select
-            id='division-select'
-            value={selectedDivision}
-            onChange={handleDivisionChange}
-          >
-            {Object.keys(bpmDivisions(bpm)).map((division) => (
-              <option key={division} value={division}>
-                {division}
-              </option>
-            ))}
-          </select>
+        <div className='bpm-division-container'>
+          <div className='bpm-container'>
+            <label className='bpm-label' htmlFor='bpm-input'>
+              BPM:
+            </label>
+            <input
+              className='bpm-input'
+              id='bpm-input'
+              type='number'
+              value={bpmInput}
+              onChange={(e) => handleBPMChange(Number(e.target.value))}
+              placeholder='Enter BPM'
+            />
+          </div>
+          <div className='division-container'>
+            <label className='division-label' htmlFor='division-select'>
+              Division:{' '}
+            </label>
+            <select
+              className='division-select'
+              id='division-select'
+              value={selectedDivision}
+              onChange={handleDivisionChange}
+            >
+              {Object.keys(bpmDivisions(bpm)).map((division) => (
+                <option key={division} value={division}>
+                  {division}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
-      {/* Row 4: Play and pause */}
-      <div>
+      {/* Row 3: Play and pause */}
+      <div className='row'>
         <Controls
           playPauseToggle={playPauseToggle}
           onChop={handleCreateRegions}
@@ -692,11 +724,11 @@ const App = () => {
         <button onClick={() => adjustZoomLevel(0)}>-</button>
         <button onClick={() => adjustZoomLevel(500)}>+</button>
       </div>
-      <div className='export'>
+      <div className='icon'>
         {' '}
-        <button onClick={handleExport}>
+        <button className='download-button' onClick={handleExport}>
           <img
-            className='icons'
+            className='download-img'
             src='/downloading.png'
             title='Export'
             alt='Export'

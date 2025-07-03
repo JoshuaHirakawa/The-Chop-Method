@@ -4,7 +4,11 @@ A modern web application for chopping and processing audio samples with precisio
 
 ## 🎵 Overview
 
-The Chop Method is an interactive audio processing tool that allows users to import audio files, visualize waveforms, and manipulate audio samples with beat-accurate timing divisions. Built with React and powered by Tone.js and WaveSurfer.js, it provides a seamless experience for music producers, DJs, and audio enthusiasts.
+The Chop Method is an interactive audio processing tool that allows users to import audio files, visualize waveforms, chop and shuffle audio samples with beat-accurate timing divisions.
+
+![The Chop Method Demo](assets/gifs/The-Chop-Method-Demo.gif)
+
+Built with React and powered by Tone.js and WaveSurfer.js, The Chop Method provides a seamless experience for music producers, DJs, and audio enthusiasts.
 
 ## ✨ Features
 

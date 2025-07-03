@@ -44,8 +44,8 @@ const Waveform = ({ audioFile, waveSurferRef, onSeek, onStop }) => {
 
           /// confirm a zoom level when waveform loads
           waveSurferRef.current.zoom(100);
-
-          waveSurferRef.current.isReady = true; /// Mark as ready with custom property
+          /// Mark as ready with custom property
+          waveSurferRef.current.isReady = true;
         });
 
         // load audiofile into wavesurfer

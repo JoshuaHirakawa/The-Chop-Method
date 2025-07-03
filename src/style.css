@@ -63,14 +63,15 @@ p {
   display: flex;
   gap: 10px;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   margin-bottom: 10px;
 }
 
 .waveform {
-  width: 100%;
-  height: 150px;
-  margin: 20px;
+  width: 90%;
+  height: 120px;
+  margin: 10px;
   background: #e0e0e0;
   border-radius: 15px;
   box-shadow: inset 6px 6px 10px rgba(0, 0, 0, 0.2),
@@ -83,12 +84,6 @@ p {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.bpm-container label {
-  font-size: 16px;
-  font-weight: bold;
-  margin-right: 5px;
 }
 
 .bpm-container input {
@@ -112,10 +107,10 @@ p {
 .zoom-container button {
   font-size: 0.8em;
   cursor: pointer;
-  height: 20px;
+  height: 25px;
   margin-left: 5px;
   margin-right: 5px;
-  margin-top: 30px;
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 
@@ -181,4 +176,106 @@ button:active {
   box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.2),
     inset -4px -4px 6px rgba(255, 255, 255, 0.7);
   transform: scale(0.95);
+}
+
+.file-upload-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.custom-file-label {
+  background: #e0e0e0;
+  padding: 10px 10px;
+  border-radius: 10px;
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.2),
+    -6px -6px 10px rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-family: futura;
+  font-size: 14px;
+  color: #414141;
+}
+.custom-file-label:hover {
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2),
+    -4px -4px 6px rgba(255, 255, 255, 0.7);
+  transform: scale(1.05);
+}
+.custom-file-label:active {
+  box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.2),
+    inset -4px -4px 6px rgba(255, 255, 255, 0.7);
+  transform: scale(0.95);
+}
+
+.file-input {
+  display: none;
+}
+
+.file-name {
+  font-size: 14px;
+  color: #414141;
+  background: #f9f9f9;
+  padding: 10px 10px;
+  border-radius: 10px;
+  box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.2),
+    inset -4px -4px 6px rgba(255, 255, 255, 0.7);
+  font-family: futura;
+}
+
+.bpm-division-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bpm-container,
+.division-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bpm-label,
+.division-label {
+  background: #8cafcb;
+  padding: 10px 10px;
+  border-radius: 10px;
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.2),
+    -6px -6px 10px rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-weight: bold;
+  font-family: futura;
+  font-size: 14px;
+  color: #414141;
+}
+
+.bpm-input,
+.division-select {
+  font-family: futura;
+  font-size: 14px;
+  color: #414141;
+  background: #f9f9f9;
+  padding: 10px 10px;
+  border-radius: 10px;
+  box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.2),
+    inset -4px -4px 6px rgba(255, 255, 255, 0.7);
+  border: none;
+  outline: none;
+  width: auto;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.bpm-input:hover,
+.division-select:hover {
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.2),
+    -6px -6px 10px rgba(255, 255, 255, 0.7);
+}
+
+.bpm-input:focus,
+.division-select:focus {
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.2),
+    -6px -6px 10px rgba(255, 255, 255, 0.7);
+  transform: scale(1.01);
 }
